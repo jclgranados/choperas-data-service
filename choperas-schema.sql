@@ -54,7 +54,7 @@ CREATE TABLE `localidades` (
   `id_municipio` int(6) NOT NULL,
   `id_provincia` int(6) NOT NULL,
   `id_ccaa` int(2) NOT NULL,
-  `nombre` int(70) NOT NULL
+  `nombre` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
