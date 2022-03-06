@@ -94,8 +94,8 @@ CREATE TABLE `precios` (
   `gasolina_98_e10` decimal(3,3) NOT NULL,
   `gasolina_98_e5` decimal(3,3) NOT NULL,
   `hidrogeno` decimal(3,3) NOT NULL,
-  `porcentaje_bioetanol` decimal(3,3) NOT NULL,
-  `porcentaje_ester_metilico` decimal(3,3) NOT NULL
+  `porcentaje_bioetanol` decimal(2,1) NOT NULL,
+  `porcentaje_ester_metilico` decimal(2,1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
