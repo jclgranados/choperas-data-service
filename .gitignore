@@ -1,0 +1,8 @@
+error_log
+config.php
+index.html
+logs/*
+demo/*
+datos.json
+datosjq.txt
+datos703.json
