@@ -116,7 +116,7 @@ class Precio {
 
 	public function existsInDb()
 	{
-		$sql = sprintf("SELECT * FROM precios where id_gasolinera = '%s' AND fecha = '%s'", $this->id_gasolinera, $this->fecha);
+		$sql = sprintf("SELECT * FROM precios where id_gasolinera = '%s' AND fecha = '%s' LIMIT 1", $this->id_gasolinera, $this->fecha);
 		if ( ! $con = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)){
 			cholog('ERROR', 'Clase Precio - función existsInDb - No se ha podido realizar la conexión a la base de datos');
 			return false;
@@ -141,9 +141,61 @@ class Precio {
 		return isset($resultado[0]);	
 	}
 
-	public function save(){
-		if ($this->existsInDb()){
+	public function update()
+	{
+		if ( ! is_array($this->entrada_antigua) ){
+			return false;
+		}
+
+		$datos_antiguos = $this->entrada_antigua;
+		$update = 'no';
+		$cambios = array();
+
+		foreach ($datos_antiguos as $clave => $valor){
+			if ($clave === 'id'){
+				continue;
+			}
+			if ($valor != $this->$clave){
+				$update = 'yes';
+				$cambios[] = $clave;
+			}
+		}
+
+		if ($update === 'no'){
 			return true;
+		}
+
+		$str_update = '';
+		$str_log = '';
+		foreach ($cambios as $cambio) {
+			$str_update .= $str_update !== '' ? ', ' : ' ';
+			$str_log .= $str_log !== '' ? ', ' : ' ';
+			$str_update .= $cambio . " = '" . addslashes($this->$cambio) ."'";
+			$str_log .= $cambio . ' ' . $datos_antiguos[$cambio] . ' por ' . $this->$cambio;
+
+		}
+
+		$sql = sprintf("UPDATE precios SET %s WHERE id_gasolinera = '%s' AND fecha = '%s'", $str_update, $this->id_gasolinera, $this->fecha);
+		if ( ! $con = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)){
+			cholog('ERROR', 'Clase Precios - función update - No se ha podido realizar la conexión a la base de datos');
+			return false;
+		}
+
+		mysqli_set_charset( $con, 'utf8');
+		if ( ! $result = mysqli_query($con, $sql)){
+			cholog('ERROR', 'Clase Precios - función update - error en el insert: ' . $sql . ' error_msyql: ' . mysqli_error($con));
+			return false;
+		}
+		$d = $datos_antiguos;
+		cholog('ACTUALIZACION', "Precios actualizados de la gasolinera con id: $this->id_gasolinera , " . $str_log);
+
+		return $result;
+	}
+
+	public function save()
+	{
+		if ($this->existsInDb()){
+			return $this->update();
 		}
 		$sql = sprintf("INSERT IGNORE INTO precios (
 			id_gasolinera, 
