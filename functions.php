@@ -20,6 +20,14 @@ function cholog($tag, $str){
 }
 
 function to_decimal($num, $decimals = 3){
+	if ($num === ''){
+		for ($i=0;$i<$decimals; $i++){
+			$num .= '0';
+		}
+		$num = '0.' . $num;
+
+
+	}
 	$num = str_replace(",", ".", $num);
 	return number_format($num, $decimals, '.', '');
 }
