@@ -2,9 +2,14 @@
 /*
  * Función para recoger los datos desde el Endpoint
  * */
-function get_data(){
-	$datos = file_get_contents(ENDPOINT_URL);
-	 return json_decode($datos, true);
+function get_data($date = 'hoy'){
+	if ($date === 'hoy'){
+		$datos = file_get_contents(ENDPOINT_URL_PRICES_TODAY);
+	} else {
+		$datos = file_get_contents(ENDPOINT_URL_PRICES_BY_DATE . $date);
+	}
+
+	return json_decode($datos, true);
 }
 
 /*

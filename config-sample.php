@@ -1,7 +1,8 @@
 <?php
 
 // Url del endpoint de donde obtenemos datos
-define('ENDPOINT_URL', 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/');
+define('ENDPOINT_URL_PRICES_TODAY', 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/');
+define('ENDPOINT_URL_PRICES_BY_DATE', 'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestresHist/');
 
 // Datos de acceso a la b ase de datos
 define('DB_HOST', 'localhost');
