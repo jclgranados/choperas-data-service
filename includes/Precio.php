@@ -155,7 +155,7 @@ class Precio {
 			if ($clave === 'id'){
 				continue;
 			}
-			if ($valor != $this->$clave){
+			if ($valor != $this->$clave && $this->$clave != '0.000'){
 				$update = 'yes';
 				$cambios[] = $clave;
 			}
